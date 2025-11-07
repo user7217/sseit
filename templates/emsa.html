@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Emotional Maturity Self-Assessment (EMSA){% endblock %}
+{% block content %}
+
+<h2 class="text-center mb-4">Emotional Maturity Self-Assessment (EMSA)</h2>
+
+<form method="post" action="/submit_emsa" class="needs-validation" novalidate>
+  <!-- Participant Info -->
+  <div class="mb-3">
+    <label class="form-label">Age</label>
+    <input type="number" class="form-control" name="age" min="1" max="120" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Gender</label>
+    <select class="form-select" name="gender" required>
+      <option value="">Select...</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <hr>
+
+  <p class="text-muted">Rate how much each statement applies to you (5 = Very Much / Strongly Agree → 1 = Never)</p>
+
+  <!-- Questions -->
+  {% for i, q in questions %}
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <p class="fw-bold mb-2">{{ i + 1 }}. {{ q }}</p>
+      <div class="d-flex flex-wrap gap-2">
+        {% for v in [5,4,3,2,1] %}
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q{{ i }}" value="{{ v }}" required>
+          <label class="form-check-label">{{ v }}</label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="d-grid">
+    <button type="submit" class="btn btn-success btn-lg">Submit</button>
+  </div>
+</form>
+
+{% endblock %}

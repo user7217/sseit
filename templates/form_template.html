@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ page_title }}</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; line-height: 1.6; }
+  h1, h2 { text-align: center; color: #003366; }
+  .question { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px 15px; margin-bottom: 20px; }
+  .question label { font-weight: bold; display: block; margin-bottom: 8px; }
+  .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+  button { display: block; margin: 25px auto; padding: 10px 22px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.2s ease; }
+  button:hover { background-color: #0056b3; }
+</style>
+</head>
+<body>
+
+<h1>{{ page_title }}</h1>
+
+<form method="post" action="{{ form_action }}">
+  <div class="question">
+    <label>Age:</label>
+    <input type="number" name="age" min="1" max="120" required>
+  </div>
+  <div class="question">
+    <label>Gender:</label>
+    <div class="radio-group">
+      <label><input type="radio" name="gender" value="Male" required> Male</label>
+      <label><input type="radio" name="gender" value="Female" required> Female</label>
+      <label><input type="radio" name="gender" value="Other" required> Other</label>
+    </div>
+  </div>
+
+  <hr>
+  <h2>Questions</h2>
+  <p>(5 = Very Much / Strongly Agree → 1 = Never)</p>
+
+  {% for i, q in questions %}
+  <div class="question">
+    <label>{{ i + 1 }}. {{ q }}</label>
+    <div class="radio-group">
+      {% for v in [5, 4, 3, 2, 1] %}
+      <label><input type="radio" name="q{{ i }}" value="{{ v }}" required> {{ v }}</label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
